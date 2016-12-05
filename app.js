@@ -1,4 +1,4 @@
-var app = angular.module('flapperNews', ['ui.router'])
+var app = angular.module('ourBlog', ['ui.router'])
 
 app.config([
   '$stateProvider',
@@ -20,7 +20,7 @@ app.config([
     $urlRouterProvider.otherwise('home');
   }]);
 
-  app.factory('posts,'[function(){
+  app.factory('posts',[function(){
     var o = {
       posts:[
         {title: 'post 1', upvotes: 5},
@@ -37,14 +37,9 @@ app.config([
     'posts',
     function($scope,posts){
       $scope.test = 'Hello world!';
-      $scope.posts = post.posts;
+      $scope.posts = posts.posts;
       $scope.addPost = function(){
         if(!$scope.title || $scope.title === '') { return; }
-        $scope.posts.push({
-          title: $scope.title,
-          link: $scope.link,
-          upvotes: 0
-        });
         $scope.posts.push({
           title: $scope.title,
           link: $scope.link,
@@ -70,5 +65,14 @@ app.config([
       'posts',
       function($scope, $stateParams, posts){
         $scope.post = posts.posts[$stateParams.id];
+        $scope.addComment = function() {
+          if($scope.body ===''){return; }
+          $scope.post.comments.push({
+            body: $scope.body,
+            author: 'user',
+            upvotes: 0
+          });
+          $scope.body='';
+        };
 
       }]);
