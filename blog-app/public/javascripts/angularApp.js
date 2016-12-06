@@ -20,7 +20,7 @@ app.config([
     $urlRouterProvider.otherwise('home');
   }]);
 
-app.factory('posts',['$http'
+app.factory('posts',['$http',
     function($http){
       var o = {
         posts:[
