@@ -6,13 +6,7 @@ app.config([
   function($stateProvider,$urlRouterProvider){
 
     $stateProvider
-	/*
-    .state('home', {
-      url: '/home',
-      templateUrl: '/home.html',
-      controller: 'MainCtrl'
-    })
-	*/
+	
 	.state('home', {
 	  url: '/home',
 	  templateUrl: '/home.html',
@@ -23,6 +17,7 @@ app.config([
 		}]
 	  }
 	})
+	
     .state('posts',{
       url: '/posts/{id}',
       templateUrl: '/posts.html',
@@ -34,23 +29,33 @@ app.config([
 
 app.factory('posts',['$http',
     function($http){
-		/*
-      var o = {
-        posts:[
-          {title: 'post 1', upvotes: 5, comments: []},
-          {title: 'post 2', upvotes: 2, comments: []},
-          {title: 'post 3', upvotes: 15, comments: []},
-          {title: 'post 4', upvotes: 9, comments: []},
-          {title: 'post 5', upvotes: 4, comments: []}
-        ]
-      };
-	  */
-      var o = o.getAll = function() {
+
+	  var o = { posts: []}
+	  
+	  //Create
+	  o.create = function(post) {
+		return $http.post('/posts', post).success(function(data){
+			o.posts.push(data);
+		});
+	  };
+      
+	  //Upvote
+	  o.upvote = function(post) {
+	  return $http.put('/posts/' + post._id + '/upvote')
+		.success(function(data){
+		  post.upvotes += 1;
+		});
+	  };
+	  
+	  //Load All in Database
+      o.getAll = function() {
         return $http.get('/posts').success(function(data){
           angular.copy(data, o.posts);
         });
       };
+	  
       return o;
+	  
 }]);
 app.controller('MainCtrl', [
       '$scope',
@@ -72,12 +77,26 @@ app.controller('MainCtrl', [
           $scope.title='';
           $scope.link='';
         };
-        $scope.incrementUpvotes = function(post) {
-          post.upvotes += 1;
-        };
+		
         $scope.decrementUpvotes = function(post) {
           post.upvotes -= 1;
         };
+		
+		//Upvote Post
+		$scope.incrementUpvotes = function(post) {
+		  posts.upvote(post);
+		};
+		
+		$scope.addPost = function(){
+		  if(!$scope.title || $scope.title === '') { return; }
+		  posts.create({
+			title: $scope.title,
+			link: $scope.link,
+		  });
+		  $scope.title = '';
+		  $scope.link = '';
+		};
+				
 }]);
 app.controller('PostsCtrl', [
         '$scope',
