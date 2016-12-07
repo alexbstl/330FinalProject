@@ -13,19 +13,6 @@ module.exports = router;
 var Post = mongoose.model('Post');
 var Comment = mongoose.model('Comment');
 
-
-router.param('comment', function(req, res, next, id) {
-  var query = Comment.findById(id);
-
-  query.exec(function (err, comment){
-    if (err) { return next(err); }
-    if (!comment) { return next(new Error('can\'t find comment')); }
-
-    req.comment = comment;
-    return next();
-  });
-});
-
 //Get Posts From Database
 router.get('/posts', function(req, res, next) {
   Post.find(function(err, posts){
@@ -70,32 +57,12 @@ router.put('/posts/:post/upvote', function(req, res, next) {
   });
 });
 
-
-/////WASTELAND
-
-//Create Comments for a Particular Post
-router.post('/posts/:post/comments', function(req, res, next) {
-  var comment = new Comment(req.body);
-  comment.post = req.post;
-
-  comment.save(function(err, comment){
-    if(err){ return next(err); }
-
-    req.post.comments.push(comment);
-    req.post.save(function(err, post) {
-      if(err){ return next(err); }
-
-      res.json(comment);
-    });
-  });
-});
-
-
-//Upvote Comments for a Particular Post
-router.put('/posts/:post/comments/:comment/upvote', function(req, res, next) {
-  req.post.comments.comment.upvote(function(err, post){
+//Downvote a Post
+router.put('/posts/:post/downvote', function(req, res, next) {
+  req.post.downvote(function(err, post){
     if (err) { return next(err); }
 
     res.json(post);
   });
 });
+
