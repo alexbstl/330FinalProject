@@ -79,7 +79,7 @@ app.controller('MainCtrl', [
   '$scope',
   'courses',
   function($scope,courses){
-
+    console.log($scope);
     $scope.courses = courses.courses;
 
     //Add A New Course

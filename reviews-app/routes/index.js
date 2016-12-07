@@ -1,13 +1,63 @@
 //Define Requirements
+var flash = require('connect-flash');
+
 var mongoose = require('mongoose');
 var express = require('express');
+var passport = require('passport');
+var Account = require('../models/Users');
 var router = express.Router();
 
 //Get Home Page
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
+
+  if(req.user){
+    res.render('index', { title: 'Express', user: req.user });
+  }
+  res.redirect('/login');
 });
-module.exports = router;
+
+//registration
+router.get('/register', function(req, res) {
+  res.render('register', { });
+});
+
+router.post('/register', function(req, res) {
+  Account.register(new Account({ username : req.body.username }), req.body.password, function(err, account) {
+    if (err) {
+      return res.render('register', { account : account });
+    }
+
+    passport.authenticate('local')(req, res, function () {
+      res.redirect('/');
+    });
+  });
+});
+
+//Login
+router.get('/login', function(req, res) {
+
+  res.render('login');
+});
+
+router.post('/login', function(req, res, next) {
+  passport.authenticate('local', function(err, user, info) {
+    if (err) {
+      return next(err); // will generate a 500 error
+    }
+    // Generate a JSON response reflecting authentication status
+    if (! user) {
+      return res.send(401,{ success : false, message : 'authentication failed' });
+    }
+    req.login(user, function(err){
+      if(err){
+        return next(err);
+      }
+      return res.redirect('/');
+    });
+  })(req, res, next);
+});
+
+
 
 //Define Mongoose Models
 var Course = mongoose.model('Course');
@@ -22,6 +72,8 @@ router.get('/courses', function(req, res, next) {
     res.json(courses);
   });
 });
+
+
 
 //Create New Course
 router.post('/courses', function(req, res, next) {
@@ -68,7 +120,7 @@ router.param('review', function(req, res, next, id) {
 router.post('/courses/:course/reviews', function(req, res, next) {
   console.log("THIS IS WHERE U R");
   var review = new Review(req.body);
-  review.course = req.course;  
+  review.course = req.course;
   review.save(function(err, review){
     if(err){ return next(err); }
 
@@ -81,60 +133,4 @@ router.post('/courses/:course/reviews', function(req, res, next) {
 });
 
 
-/*
-
-//Find a Post By ID
-router.param('post', function(req, res, next, id) {
-  var query = Post.findById(id);
-
-  query.exec(function (err, post){
-    if (err) { return next(err); }
-    if (!post) { return next(new Error("can't find post")); }
-
-    req.post = post;
-    return next();
-  });
-});
-
-
-
-//ADDED
-
-//Get Comment By ID
-router.param('comment', function(req, res, next, id) {
-  var query = Comment.findById(id);
-
-  query.exec(function (err, comment){
-    if (err) { return next(err); }
-    if (!comment) { return next(new Error("can't find comment")); }
-
-    req.comment = comment;
-    return next();
-  });
-});
-
-//Populate a Post with Comments
-router.get('/posts/:post', function(req, res, next) {
-  req.post.populate('comments', function(err, post) {
-    res.json(post);
-  });
-});
-
-router.post('/posts/:post/comments', function(req, res, next) {
-  var comment = new Comment(req.body);
-  comment.post = req.post;
-
-  comment.save(function(err, comment){
-    if(err){ return next(err); }
-
-    req.post.comments.push(comment);
-    req.post.save(function(err, post) {
-      if(err){ return next(err); }
-
-      res.json(comment);
-    });
-  });
-});
-
-
-*/
+module.exports = router;
