@@ -6,6 +6,9 @@ var CourseSchema = new mongoose.Schema({
   dept: String,
   prof: String,
   img_link: String,
+  overall_score: Number,
+  diff_score: Number,
+  teach_score: Number,
   reviews: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Review' }]
 });
 

@@ -75,89 +75,6 @@ function($http){
 }
 ])
 
-// app.factory('posts',['$http',
-//     function($http){
-//
-// 	  var o = { posts: []}
-//
-// 	  //Create
-// 	  o.create = function(post) {
-// 		return $http.post('/posts', post).success(function(data){
-// 			o.posts.push(data);
-// 		});
-// 	  };
-//
-// 	  //Upvote
-// 	  o.upvote = function(post) {
-// 	  return $http.put('/posts/' + post._id + '/upvote')
-// 		.success(function(data){
-// 		  post.upvotes += 1;
-// 		});
-// 	  };
-//
-// 	  //Downvote
-// 	  o.downvote = function(post){
-// 		return $http.put('/posts/' + post._id + '/downvote')
-// 		.success(function(data){
-// 		  post.upvotes -= 1;
-// 		});
-// 	  }
-//
-// 	  //Get an Individual Post By ID
-//       o.get = function(id) {
-// 		return $http.get('/posts/' + id).then(function(res){
-// 			return res.data;
-// 		});
-// 	  };
-//
-// 	  //Add a Comment
-// 	  o.addComment = function(id, comment) {
-// 		return $http.post('/posts/' + id + '/comments', comment);
-// 	  };
-//
-// 	  //Load All Posts in Database
-//       o.getAll = function() {
-//         return $http.get('/posts').success(function(data){
-//           angular.copy(data, o.posts);
-//         });
-//       };
-//
-//       return o;
-//
-// }]);
-
-/*
-app.controller('MainCtrl', [
-'$scope',
-'posts',
-function($scope,posts){
-
-$scope.posts = posts.posts;
-
-//Upvote Post
-$scope.incrementUpvotes = function(post) {
-posts.upvote(post);
-};
-
-//Downvote Post
-$scope.decrementUpvotes = function(post) {
-posts.downvote(post);
-};
-
-//Add Post
-$scope.addPost = function(){
-if(!$scope.title || $scope.title === '') { return; }
-posts.create({
-title: $scope.title,
-link: $scope.link,
-});
-$scope.title = '';
-$scope.link = '';
-};
-
-}]);
-*/
-
 app.controller('MainCtrl', [
   '$scope',
   'courses',
@@ -177,7 +94,6 @@ app.controller('MainCtrl', [
       //If There Is No Link to Image, Populate With Default
       if(!$scope.img_link){
         $scope.img_link = "http://www.senseitout.com/wp-content/uploads/2016/01/3q.jpg";
-		console.log("CHECK")
 	  }
 
       //Log Input
@@ -195,8 +111,11 @@ app.controller('MainCtrl', [
 		code: $scope.course_code,
 		dept: $scope.depart,
 		prof: $scope.prof,
-		img_link : $scope.img_link
-
+		img_link : $scope.img_link,
+		overall_score : 0,
+		diff_score : 0,
+		teach_score : 0
+		
       });
 
       //Clear Fields
@@ -209,7 +128,6 @@ app.controller('MainCtrl', [
     }
   }
 ]);
-
 
 app.controller('CoursesCtrl', [
   '$scope',
@@ -228,12 +146,13 @@ app.controller('CoursesCtrl', [
 	  console.log("You're In");	
       courses.addReview(course._id, {
 		  
-        body: $scope.body
+        body: $scope.body,
+		overall_score : 0,
+		diff_score : 0,
+		teach_score : 0
         
 		
       }).success(function(review) {
-		  console.log("IT WORKED");
-		  console.log(review);
         $scope.course.reviews.push(review);
       });
 
