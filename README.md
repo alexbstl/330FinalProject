@@ -1,8 +1,7 @@
-	
-	Trevor Krolak (ID 431339)
+Trevor Krolak (ID 431339)
 	Alex Bernstein (ID 412669)
 	
-	Our Site Is Hosted At: 
+	Our Site Is Hosted At: http://ec2-184-72-73-8.compute-1.amazonaws.com:3456/
 	
 	Novel Technology:
 	
@@ -47,7 +46,4 @@
 	that some features may have changed. 
 	
 	In addition, we used (http://mherman.org/blog/2015/01/31/local-authentication-with-passport-and-express-4/) and (https://www.sitepoint.com/user-authentication-mean-stack/)
-	to set up login and registration via Passport.js. 
-	
-	
-	
+	to set up login and registration via Passport.js.
