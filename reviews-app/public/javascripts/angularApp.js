@@ -48,6 +48,10 @@ function($http){
     });
   };
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 845f0bf37e9eee1c842d03be62d9df84bb8cdfc8
   //Get All Courses
   crs.getAll = function() {
     return $http.get('/courses').success(function(data){
@@ -156,7 +160,7 @@ app.controller('MainCtrl', [
   function($scope,courses){
 
     $scope.courses = courses.courses;
-	
+
     //Add A New Course
     $scope.addCourse = function(){
 
@@ -177,10 +181,11 @@ app.controller('MainCtrl', [
       console.log($scope.depart);
       console.log($scope.course_code);
       console.log($scope.prof);
+      console.log($scope.img_link);
 
       //Create the New Course
       courses.create({
-		  
+
 		name: $scope.course_name,
 		code: $scope.course_code,
 		dept: $scope.depart,

@@ -2,7 +2,7 @@ var mongoose = require('mongoose');
 require('./models/Courses');
 require('./models/Reviews');
 
-mongoose.connect('mongodb://localhost/news');
+mongoose.connect('mongodb://localhost/coursereviews');
 
 var express = require('express');
 var path = require('path');
