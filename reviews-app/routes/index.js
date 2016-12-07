@@ -19,6 +19,7 @@ router.get('/courses', function(req, res, next) {
     if(err){
       return next(err);
     }
+	console.log("in get courses");
     res.json(courses);
   });
 });
@@ -29,6 +30,7 @@ router.post('/courses', function(req, res, next) {
   course.save(function(err, course){
     if(err){ return next(err); }
     res.json(course);
+	console.log("here!!");
   });
 });
 

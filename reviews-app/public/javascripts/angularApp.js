@@ -13,11 +13,11 @@ app.config([
   url: '/home',
   templateUrl: '/home.html',
   controller: 'MainCtrl',
-  // resolve: {
-  //   postPromise: ['courses', function(courses){
-  //     return courses.getAll();
-  //   }]
-  // }
+   resolve: {
+     postPromise: ['courses', function(courses){
+       return courses.getAll();
+     }]
+   }
 })
 
 
@@ -48,6 +48,7 @@ function($http){
     });
   };
 
+  
   //Get All Courses
   crs.getAll = function() {
     return $http.get('/courses').success(function(data){
