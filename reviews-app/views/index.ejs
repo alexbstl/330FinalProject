@@ -8,7 +8,7 @@
 
   <script src="/javascripts/angularApp.js"></script>
   <style> .glyphicon-thumbs-up { cursor:pointer } </style>
-  
+
 </head>
 <body ng-app="ourBlog">
   <div class="row">
@@ -21,26 +21,22 @@
     <div class="page-header">
       <h1>Welcome to WUSTL Course Reviews</h1>
     </div>
-    <div ng-repeat="post in posts | orderBy:'-upvotes'">
-      <span class="glyphicon glyphicon-thumbs-up"
-      ng-click="incrementUpvotes(post)"></span>
-      <span class="glyphicon glyphicon-thumbs-down"
-      ng-click="decrementUpvotes(post)"></span>
-      {{post.upvotes}}
+    <div ng-repeat="course in courses | orderBy:'-upvotes'">
+
       <span style="font-size:20px; margin-left:10px;">
         <a ng-show="post.link" href="{{post.link}}">
-          {{post.title}}
+          {{course.title}}
         </a>
         <span ng-hide="post.link">
-          {{post.title}}
+          {{course.title}}
         </span>
         <span>
-		  <a href="#/posts/{{post._id}}">Reviews</a>
+          <a href="#/courses/{{post._id}}">Reviews</a>
         </span>
       </span>
     </div>
 
-	<!– Add A New Course ->
+    <!-- Add A New Course -->
     <form ng-submit="addCourse()"
     style="margin-top:30px;">
     <h3>Add a New Course</h3>
@@ -50,7 +46,7 @@
       placeholder="Course Name"
       ng-model="course_name"></input>
     </div>
-	<div class="form-group">
+    <div class="form-group">
       <input type="text"
       class="form-control"
       placeholder="Department"
@@ -62,13 +58,13 @@
       placeholder="Course Code"
       ng-model="course_code"></input>
     </div>
-	<div class="form-group">
+    <div class="form-group">
       <input type="text"
       class="form-control"
       placeholder="Professor"
       ng-model="prof"></input>
     </div>
-	<div class="form-group">
+    <div class="form-group">
       <input type="text"
       class="form-control"
       placeholder="Link to Image (Optional)"
@@ -77,41 +73,41 @@
     <button type="submit" class="btn btn-primary">Add Course</button>
   </form>
 </script>
-
+<!--
 <script type="text/ng-template" id="/posts.html">
-  <div class="page-header">
-    <h3>
-      <a ng-show="post.link" href="{{post.link}}">
-        {{post.title}}
-      </a>
-      <span ng-hide="post.link">
-        {{post.title}}
-      </span>
-    </h3>
-  </div>
+<div class="page-header">
+<h3>
+<a ng-show="course.link" href="{{course.link}}">
+{{course.title}}
+</a>
+<span ng-hide="course.link">
+{{course.title}}
+</span>
+</h3>
+</div>
 
-  <div ng-repeat="comment in post.comments | orderBy:'-upvotes'">
-    <span class="glyphicon glyphicon-thumbs-up"
-    ng-click="incrementUpvotes(comment)"></span>
-    <span class="glyphicon glyphicon-thumbs-down"
-    ng-click="decrementUpvotes(comment)"></span>
-    {{comment.upvotes}} - by {{comment.author}}
-    <span style="font-size:20px; margin-left:10px;">
-      {{comment.body}}
-    </span>
-  </div>
-  <form ng-submit="addComment()"
-  style="margin-top:30px;">
-  <h3>Add a new comment</h3>
+<div ng-repeat="comment in post.comments | orderBy:'-upvotes'">
+<span class="glyphicon glyphicon-thumbs-up"
+ng-click="incrementUpvotes(comment)"></span>
+<span class="glyphicon glyphicon-thumbs-down"
+ng-click="decrementUpvotes(comment)"></span>
+{{comment.upvotes}} - by {{comment.author}}
+<span style="font-size:20px; margin-left:10px;">
+{{comment.body}}
+</span>
+</div>
+<form ng-submit="addComment()"
+style="margin-top:30px;">
+<h3>Add a new comment</h3>
 
-  <div class="form-group">
-    <input type="text"
-    class="form-control"
-    placeholder="Comment"
-    ng-model="body"></input>
-  </div>
-  <button type="submit" class="btn btn-primary">Post</button>
-</form>
+<div class="form-group">
+<input type="text"
+class="form-control"
+placeholder="Comment"
+ng-model="body"></input>
+</div>
+<button type="submit" class="btn btn-primary">Post</button>
+</form> -->
 
 </script>
 </body>

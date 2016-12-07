@@ -16,7 +16,7 @@ var Review = mongoose.model('Review');
 //Get Courses From Database
 router.get('/courses', function(req, res, next) {
   Course.find(function(err, courses){
-    if(err){ 
+    if(err){
       return next(err);
     }
     res.json(courses);
@@ -39,7 +39,7 @@ var Comment = mongoose.model('Comment');
 //Get Posts From Database
 router.get('/posts', function(req, res, next) {
   Post.find(function(err, posts){
-    if(err){ 
+    if(err){
       return next(err);
     }
 
@@ -114,7 +114,7 @@ router.get('/posts/:post', function(req, res, next) {
 router.post('/posts/:post/comments', function(req, res, next) {
   var comment = new Comment(req.body);
   comment.post = req.post;
-  
+
   comment.save(function(err, comment){
     if(err){ return next(err); }
 

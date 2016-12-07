@@ -1,6 +1,6 @@
 var mongoose = require('mongoose');
-require('./models/Posts');
-require('./models/Comments');
+require('./models/Courses');
+require('./models/Reviews');
 
 mongoose.connect('mongodb://localhost/news');
 
