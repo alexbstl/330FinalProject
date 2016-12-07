@@ -30,6 +30,7 @@
         <option value="code">Course Code</option>
         <option value="dept">Department</option>
         <option value="prof">Professor Name</option>
+		<option value="overall_score">Average Rating</option>
       </select>
     </p>
     <table class="table table-condensed">
@@ -40,16 +41,19 @@
           <th>Course Name</th>
           <th>Course Code</th>
           <th>Department</th>
+		  <th>Average Rating</th>
+		  <th>Student Reviews</th>
         </tr>
       </thead>
       <tbody>
         <tr ng-repeat="course in courses |filter:$ctrl.query| orderBy:$ctrl.orderProp">
-          <td><img src={{course.img_link}} alt = "Image Here" height = "42" width = "42"</td>
+          <td><img src={{course.img_link}} alt = "Image Here" height = "60" width = "60"></td>
           <td>{{course.prof}}</td>
           <td>{{course.name}}</td>
           <td>{{course.code}}</td>
           <td>{{course.dept}}</td>
-          <td><a href="#/courses/{{course._id}}">Comments</a></td>
+		  <td>{{course.overall_score}}</td>
+          <td><a href="#/courses/{{course._id}}">Reviews</a></td>
         </tr>
       </tbody>
     </table>
@@ -95,44 +99,55 @@
 <script type="text/ng-template" id="/courses.html">
   <div class="page-header">
     <h2>
-      {{course.name}}
+      
     </h2>
     <h3>
-      {{course.prof}}
+	  {{course.name}} ( {{course.dept}} {{course.code}} ) <br>
+      {{course.prof}} <br>
+	  <img src={{course.img_link}} alt = "Image Here" height = "200" width = "200"> <br>
+	  Average Score: {{course.overall_score}} <br>
+	  Average Difficulty: {{course.diff_score}} <br>
+	  Average Teaching Quality: {{course.teach_score}} <br><hr>
+	  Existing Reviews:
     </h3>
+	<div ng-repeat="review in course.reviews">
+	  <hr>
+      {{review.body}} <br>
+      Overall: {{review.overall_score}}<br>
+      Difficulty: {{review.diff_score}}<br>
+      Teaching: {{review.teach_score}}<br>
+	  <hr>
+    </div>
     <div class="scores">
       {{course.overall_score}}
       {{course.diff_score}}
       {{course.teach_score}}
     </div>
+	<h3>We Want Your Feedback</h3>
     <form ng-submit="addReview()">
       <div class="form-group">
         <input type="text"
         class="form-control"
-        placeholder="Comments"
+        placeholder="Comments on the Class"
         ng-model="body"></input>
-        <button type="submit" class="btn btn-primary">Add Review</button>
       </div>
       <div class = "form-group">
         <label for="Overall">Overall Score:</label>
         <select ng-model="overall_score" ng-options="selectedItem for selectedItem in values"></select>
-        Overall Score: {{overall_score}}
         <br>
-        <label for="Difficulty">Difficulty Score:</label>
+        <label for="Difficulty">Course Difficulty:</label>
         <select ng-model="diff_score" ng-options="selectedItem for selectedItem in values"></select>
-        Difficulty Score: {{diff_score}}
         <br>
-        <label for="Teaching">Teaching Score:</label>
+        <label for="Teaching">Teaching Ability:</label>
         <select ng-model="teach_score" ng-options="selectedItem for selectedItem in values"></select>
-        Teaching Score: {{teach_score}}
       </div>
+	  <button type="submit" class="btn btn-primary">Add Review</button>
     </form>
-    <div ng-repeat="review in course.reviews">
-      {{review.body}}
-      {{review.overall_score}}
-      {{review.diff_score}}
-      {{review.teach_score}}
-    </div>
+	<hr>
+	<h3>
+	<a href="#/home">Return to Main Page</a>
+	</h3>
+    
 
   </div>
 
