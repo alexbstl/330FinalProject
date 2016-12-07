@@ -73,8 +73,6 @@ router.get('/courses', function(req, res, next) {
   });
 });
 
-
-
 //Create New Course
 router.post('/courses', function(req, res, next) {
   var course = new Course(req.body);
