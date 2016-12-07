@@ -122,6 +122,7 @@ app.factory('posts',['$http',
 	  
 }]);
 
+/*
 app.controller('MainCtrl', [
       '$scope',
       'posts',
@@ -151,6 +152,7 @@ app.controller('MainCtrl', [
 		};
 				
 }]);
+*/
 
 app.controller('MainCtrl', [
     '$scope',
@@ -161,36 +163,36 @@ app.controller('MainCtrl', [
 		//Add A New Course
 		$scope.addCourse = function(){
 			
-		//Check to See All Required Fields Are Populated
-		if(!$scope.course_name || $scope.course_name === '') { return; }
-		if(!$scope.depart || $scope.depart === '') { return; }
-		if(!$scope.course_code || $scope.course_code === '') { return; }
-		if(!$scope.prof || $scope.prof === '') { return; }
-			
-		//If There Is No Link to Image, Populate With Default
-		if($scope.img_link === ''){
-			$scope.img_link = "http://www.senseitout.com/wp-content/uploads/2016/01/3q.jpg";
-		}
-			
-		//Log Input
-		console.log("It Worked");
-		console.log($scope.course_name);
-		console.log($scope.depart);
-		console.log($scope.course_code);
-		console.log($scope.prof);
-			
-		//Create the New Course
-		courses.create({
-			
-			// CODE GOES HERE
-			
-		});	
-			
-		//Clear Fields
-		$scope.course_name = "";
-		$scope.depart = "";
-		$scope.course_code = "";
-		$scope.prof = "";
+			//Check to See All Required Fields Are Populated
+			if(!$scope.course_name || $scope.course_name === '') { return; }
+			if(!$scope.depart || $scope.depart === '') { return; }
+			if(!$scope.course_code || $scope.course_code === '') { return; }
+			if(!$scope.prof || $scope.prof === '') { return; }
+				
+			//If There Is No Link to Image, Populate With Default
+			if($scope.img_link === ''){
+				$scope.img_link = "http://www.senseitout.com/wp-content/uploads/2016/01/3q.jpg";
+			}
+				
+			//Log Input
+			console.log("It Worked");
+			console.log($scope.course_name);
+			console.log($scope.depart);
+			console.log($scope.course_code);
+			console.log($scope.prof);
+				
+			//Create the New Course
+			courses.create({
+				
+				// CODE GOES HERE
+				
+			});	
+				
+			//Clear Fields
+			$scope.course_name = "";
+			$scope.depart = "";
+			$scope.course_code = "";
+			$scope.prof = "";
 			
 		}
 	}
