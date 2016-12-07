@@ -48,10 +48,6 @@ function($http){
     });
   };
 
-<<<<<<< HEAD
-=======
-
->>>>>>> 845f0bf37e9eee1c842d03be62d9df84bb8cdfc8
   //Get All Courses
   crs.getAll = function() {
     return $http.get('/courses').success(function(data){
@@ -65,7 +61,7 @@ function($http){
 		return res.data;
 	 });
    };
-  
+
   return crs;
 
 }
