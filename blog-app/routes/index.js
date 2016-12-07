@@ -81,7 +81,7 @@ router.param('comment', function(req, res, next, id) {
   });
 });
 
-//Populate a Post
+//Populate a Post with Comments
 router.get('/posts/:post', function(req, res, next) {
   req.post.populate('comments', function(err, post) {
     res.json(post);
@@ -91,7 +91,6 @@ router.get('/posts/:post', function(req, res, next) {
 router.post('/posts/:post/comments', function(req, res, next) {
   var comment = new Comment(req.body);
   comment.post = req.post;
-  comment.author = req.payload.username;
   
   comment.save(function(err, comment){
     if(err){ return next(err); }
