@@ -36,7 +36,6 @@ router.post('/courses', function(req, res, next) {
 router.param('course', function(req, res, next, id) {
   var query = Course.findById(id);
   console.log(id);
-  console.log(query);
   query.exec(function (err, course){
     if (err) { return next(err); }
     if (!course) { return next(new Error("can't find course")); }
@@ -48,7 +47,6 @@ router.param('course', function(req, res, next, id) {
 
 //Populate a Post with Comments
 router.get('/courses/:course', function(req, res, next) {
-	console.log("THE FUCK");
   req.course.populate('courses', function(err, course) {
     res.json(course);
   });

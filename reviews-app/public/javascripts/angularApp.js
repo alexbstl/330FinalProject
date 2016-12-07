@@ -26,7 +26,7 @@ app.config([
   templateUrl: '/courses.html',
   controller: 'CoursesCtrl',
    resolve: {
-     post: ['$stateParams', 'courses', function($stateParams, courses) {
+     course: ['$stateParams', 'courses', function($stateParams, courses) {
        return courses.get($stateParams.id);
      }]
    }
@@ -59,6 +59,7 @@ function($http){
    crs.get = function(id) {
 	 console.log("you're in here");
 	 return $http.get('/courses/' + id).then(function(res){
+		console.log(res);
 		return res.data;
 	 });
    };
@@ -211,7 +212,8 @@ app.controller('CoursesCtrl', [
   function($scope,courses,course){
 
     $scope.course = course;
-	console.log(course);
+
+	
 	/*
     //Add Comment
     $scope.addComment = function() {

@@ -1,0 +1,9 @@
+diff a/reviews-app/views/index.ejs b/reviews-app/views/index.ejs	(rejected hunks)
+@@ -35,6 +35,7 @@
+     </thead>
+     <tbody>
+       <tr ng-repeat="course in courses | orderBy:'code'">
++          <td><img src={{course.img_link}} alt = "Image Here" height = "42" width = "42"</td>
+           <td>{{course.prof}}</td>
+           <td>{{course.name}}</td>
+           <td>{{course.code}}</td>
