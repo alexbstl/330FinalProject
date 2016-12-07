@@ -233,6 +233,7 @@ app.controller('CoursesCtrl', [
 		
       }).success(function(review) {
 		  console.log("IT WORKED");
+		  console.log(review);
         $scope.course.reviews.push(review);
       });
 

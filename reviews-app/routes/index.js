@@ -35,7 +35,6 @@ router.post('/courses', function(req, res, next) {
 //Find a Course By ID
 router.param('course', function(req, res, next, id) {
   var query = Course.findById(id);
-  console.log(id);
   query.exec(function (err, course){
     if (err) { return next(err); }
     if (!course) { return next(new Error("can't find course")); }
@@ -46,7 +45,7 @@ router.param('course', function(req, res, next, id) {
 
 //Populate a Course with Reviews
 router.get('/courses/:course', function(req, res, next) {
-  req.course.populate('courses', function(err, course) {
+  req.course.populate('reviews', function(err, course) {
     res.json(course);
   });
 });
@@ -67,17 +66,15 @@ router.param('review', function(req, res, next, id) {
 
 
 router.post('/courses/:course/reviews', function(req, res, next) {
-  
+  console.log("THIS IS WHERE U R");
   var review = new Review(req.body);
-  review.course = req.course;
-
+  review.course = req.course;  
   review.save(function(err, review){
     if(err){ return next(err); }
 
     req.course.reviews.push(review);
-    req.course.save(function(err, couse) {
+    req.course.save(function(err, course) {
       if(err){ return next(err); }
-
       res.json(review);
     });
   });
@@ -139,11 +136,5 @@ router.post('/posts/:post/comments', function(req, res, next) {
   });
 });
 
-router.put('/posts/:post/comments/:comment/upvote', function(req, res, next) {
-  req.comment.upvote(function(err, comment){
-    if (err) { return next(err); }
 
-    res.json(comment);
-  });
-});
 */
