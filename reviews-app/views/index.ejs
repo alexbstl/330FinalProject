@@ -44,7 +44,7 @@
     </thead>
     <tbody>
       <tr ng-repeat="course in courses |filter:$ctrl.query| orderBy:$ctrl.orderProp">
-          <td>{{course.img_link}}</td>
+          <td><img src={{course.img_link}} alt = "Image Here" height = "42" width = "42"</td>
           <td>{{course.prof}}</td>
           <td>{{course.name}}</td>
           <td>{{course.code}}</td>
