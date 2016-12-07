@@ -8,4 +8,5 @@ var ReviewSchema = new mongoose.Schema({
   course: { type: mongoose.Schema.Types.ObjectId, ref: 'Course' }
 });
 
+
 mongoose.model('Review', ReviewSchema);

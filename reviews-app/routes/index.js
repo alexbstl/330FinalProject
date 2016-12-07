@@ -13,7 +13,7 @@ router.get('/', function(req, res, next) {
   if(req.user){
     res.render('index', { title: 'Express', user: req.user });
   }
-  res.redirect('/login');
+  res.render('login');
 });
 
 //registration
@@ -28,14 +28,13 @@ router.post('/register', function(req, res) {
     }
 
     passport.authenticate('local')(req, res, function () {
-      res.redirect('/');
+      res.render(index,{account: account});
     });
   });
 });
 
 //Login
 router.get('/login', function(req, res) {
-
   res.render('login');
 });
 
@@ -46,7 +45,8 @@ router.post('/login', function(req, res, next) {
     }
     // Generate a JSON response reflecting authentication status
     if (! user) {
-      return res.send(401,{ success : false, message : 'authentication failed' });
+      res.render('login');
+      // return res.send(401,{ success : false, message : 'authentication failed' });
     }
     req.login(user, function(err){
       if(err){
@@ -57,6 +57,10 @@ router.post('/login', function(req, res, next) {
   })(req, res, next);
 });
 
+router.get('/logout', function(req, res) {
+    req.logout();
+    res.redirect('/');
+});
 
 
 //Define Mongoose Models
@@ -123,10 +127,14 @@ router.post('/courses/:course/reviews', function(req, res, next) {
     if(err){ return next(err); }
 
     req.course.reviews.push(review);
+
     req.course.save(function(err, course) {
       if(err){ return next(err); }
       res.json(review);
     });
+    // req.course.totalScore(function(err){
+    //   if(err){return next(err);}
+    // });
   });
 });
 
