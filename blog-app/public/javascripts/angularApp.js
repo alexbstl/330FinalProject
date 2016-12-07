@@ -18,16 +18,16 @@ app.config([
 	  }
 	})
 	
-	.state('posts', {
-	  url: '/posts/{id}',
-	  templateUrl: '/posts.html',
-	  controller: 'PostsCtrl',
+    .state('posts',{
+      url: '/posts/{id}',
+      templateUrl: '/posts.html',
+      controller: 'PostsCtrl',
 	  resolve: {
 		post: ['$stateParams', 'posts', function($stateParams, posts) {
 		  return posts.get($stateParams.id);
 		}]
 	  }
-	});
+    });
 
     $urlRouterProvider.otherwise('home');
   }]);
@@ -80,13 +80,9 @@ app.factory('posts',['$http',
 app.controller('MainCtrl', [
       '$scope',
       'posts',
-	  'post',
-      function($scope,posts,post){
+      function($scope,posts){
         $scope.test = 'Hello world!';
         $scope.posts = posts.posts;
-		$scope.post = post;
-		
-		
         $scope.addPost = function(){
           if(!$scope.title || $scope.title === '') { return; }
           $scope.posts.push({
@@ -101,7 +97,6 @@ app.controller('MainCtrl', [
           $scope.title='';
           $scope.link='';
         };
-		
 		
 		/*
         $scope.decrementUpvotes = function(post) {
@@ -133,10 +128,11 @@ app.controller('MainCtrl', [
 }]);
 app.controller('PostsCtrl', [
         '$scope',
-        '$stateParams',
         'posts',
-        function($scope, $stateParams, posts){
-          $scope.post = posts.posts[$stateParams.id];
+		'post',
+        function($scope,posts,post){
+          //$scope.post = posts.posts[$stateParams.id];
+		  $scope.post = post;
           $scope.addComment = function() {
             if($scope.body ===''){return; }
             $scope.post.comments.push({
