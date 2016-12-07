@@ -62,7 +62,7 @@ app.factory('courses', ['$http',
 		//Get All Courses
 		crs.getAll = function() {
 			return $http.get('/courses').success(function(data){
-				angular.copy(data, o.posts);
+				angular.copy(data, crs.courses);
 			});
 		};
 		
@@ -70,7 +70,8 @@ app.factory('courses', ['$http',
 	
 	}
 ])
-  
+
+/*
 app.factory('posts',['$http',
     function($http){
 
@@ -121,6 +122,7 @@ app.factory('posts',['$http',
       return o;
 	  
 }]);
+*/
 
 /*
 app.controller('MainCtrl', [
