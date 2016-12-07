@@ -167,9 +167,10 @@ app.controller('MainCtrl', [
       if(!$scope.prof || $scope.prof === '') { return; }
 
       //If There Is No Link to Image, Populate With Default
-      if($scope.img_link === ''){
+      if(!$scope.img_link){
         $scope.img_link = "http://www.senseitout.com/wp-content/uploads/2016/01/3q.jpg";
-      }
+		console.log("CHECK")
+	  }
 
       //Log Input
       console.log("It Worked");
@@ -195,6 +196,7 @@ app.controller('MainCtrl', [
       $scope.depart = "";
       $scope.course_code = "";
       $scope.prof = "";
+	  $scope.img_link = "";
 
     }
   }

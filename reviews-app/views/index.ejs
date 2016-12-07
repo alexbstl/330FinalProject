@@ -30,15 +30,17 @@
         <th>Course Name</th>
         <th>Course Code</th>
         <th>Department</th>
+		<th>Reviews</th>
       </tr>
     </thead>
     <tbody>
       <tr ng-repeat="course in courses | orderBy:'code'">
-          <td>{{course.img_link}}</td>
+          <td><img src={{course.img_link}} alt = "Image Here" height = "42" width = "42"</td>
           <td>{{course.prof}}</td>
           <td>{{course.name}}</td>
           <td>{{course.code}}</td>
           <td>{{course.dept}}</td>
+		  <td><a href="#/courses/{{course._id}}">Comments</a></td>
       </tr>
     </tbody>
     </table>
