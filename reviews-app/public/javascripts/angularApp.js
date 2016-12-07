@@ -148,7 +148,8 @@ app.controller('MainCtrl', [
   'courses',
   function($scope,courses){
 
-    $scope.courses = courses.crs
+    $scope.courses = courses.courses;
+	
     //Add A New Course
     $scope.addCourse = function(){
 
@@ -172,8 +173,12 @@ app.controller('MainCtrl', [
 
       //Create the New Course
       courses.create({
-
-        // CODE GOES HERE
+		  
+		name: $scope.course_name,
+		code: $scope.course_code,
+		dept: $scope.depart,
+		prof: $scope.prof,
+		img_link : $scope.img_link
 
       });
 

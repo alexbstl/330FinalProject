@@ -21,17 +21,14 @@
     <div class="page-header">
       <h1>Welcome to WUSTL Course Reviews</h1>
     </div>
-    <div ng-repeat="course in courses | orderBy:'-upvotes'">
+    <div ng-repeat="course in courses | orderBy:'code'">
 
-      <span style="font-size:20px; margin-left:10px;">
-        <a ng-show="post.link" href="{{post.link}}">
-          {{course.title}}
-        </a>
-        <span ng-hide="post.link">
-          {{course.title}}
-        </span>
+        <span style="font-size:20px; margin-left:10px;">
+       
+        {{course.name}}
+       
         <span>
-          <a href="#/courses/{{post._id}}">Reviews</a>
+          <a href="#/courses/{{course._id}}">Reviews</a>
         </span>
       </span>
     </div>
