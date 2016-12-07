@@ -28,7 +28,7 @@ router.post('/register', function(req, res) {
     }
 
     passport.authenticate('local')(req, res, function () {
-      res.render(index,{account: account});
+      res.render('login',{account: account});
     });
   });
 });
