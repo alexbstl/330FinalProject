@@ -64,6 +64,12 @@ function($http){
 	 });
    };
 
+   //Add a Review to a Course
+ 	crs.addReview = function(id, review) {
+		return $http.post('/courses/' + id + '/reviews', review);
+ 	};
+   
+   
   return crs;
 
 }
@@ -214,23 +220,25 @@ app.controller('CoursesCtrl', [
     $scope.course = course;
 
 	
-	/*
-    //Add Comment
-    $scope.addComment = function() {
+	
+    //Add Review
+    $scope.addReview = function() {
       if($scope.body ===''){return; }
 
-
-      posts.addComment(post._id, {
-        body: $scope.body,
-        author: 'user',
-      }).success(function(comment) {
-        $scope.post.comments.push(comment);
+	  console.log("You're In");	
+      courses.addReview(course._id, {
+		  
+        body: $scope.body
+        
+		
+      }).success(function(review) {
+		  console.log("IT WORKED");
+        $scope.course.reviews.push(review);
       });
-
 
       $scope.body='';
     };
-	*/
+	
 	
   }
 ]);

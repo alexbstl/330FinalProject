@@ -44,8 +44,7 @@ router.param('course', function(req, res, next, id) {
   });
 });
 
-
-//Populate a Post with Comments
+//Populate a Course with Reviews
 router.get('/courses/:course', function(req, res, next) {
   req.course.populate('courses', function(err, course) {
     res.json(course);
@@ -66,7 +65,7 @@ router.param('review', function(req, res, next, id) {
   });
 });
 
-/*
+
 router.post('/courses/:course/reviews', function(req, res, next) {
   
   var review = new Review(req.body);
@@ -76,14 +75,14 @@ router.post('/courses/:course/reviews', function(req, res, next) {
     if(err){ return next(err); }
 
     req.course.reviews.push(review);
-    req.couse.save(function(err, couse) {
+    req.course.save(function(err, couse) {
       if(err){ return next(err); }
 
       res.json(review);
     });
   });
 });
-*/
+
 
 /*
 
