@@ -1,15 +1,38 @@
+//Define Requirements
 var mongoose = require('mongoose');
 var express = require('express');
 var router = express.Router();
 
-/* GET home page. */
+//Get Home Page
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
-
 module.exports = router;
 
+//Define Mongoose Models
+var Course = mongoose.model('Course');
+var Review = mongoose.model('Review');
 
+//Get Courses From Database
+router.get('/courses', function(req, res, next) {
+  Course.find(function(err, courses){
+    if(err){ 
+      return next(err);
+    }
+    res.json(courses);
+  });
+});
+
+//Create New Course
+router.post('/courses', function(req, res, next) {
+  var course = new Course(req.body);
+  course.save(function(err, course){
+    if(err){ return next(err); }
+    res.json(course);
+  });
+});
+
+/*
 var Post = mongoose.model('Post');
 var Comment = mongoose.model('Comment');
 
@@ -111,3 +134,4 @@ router.put('/posts/:post/comments/:comment/upvote', function(req, res, next) {
     res.json(comment);
   });
 });
+*/
