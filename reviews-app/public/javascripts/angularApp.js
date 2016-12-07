@@ -7,6 +7,7 @@ app.config([
 
     $stateProvider
 	
+	/*
 	.state('home', {
 	  url: '/home',
 	  templateUrl: '/home.html',
@@ -17,6 +18,19 @@ app.config([
 		}]
 	  }
 	})
+	*/
+	
+	.state('home', {
+	  url: '/home',
+	  templateUrl: '/home.html',
+	  controller: 'MainCtrl',
+	  resolve: {
+		postPromise: ['courses', function(courses){
+		  return courses.getAll();
+		}]
+	  }
+	})
+	
 	
     .state('posts',{
       url: '/posts/{id}',
@@ -32,6 +46,31 @@ app.config([
     $urlRouterProvider.otherwise('home');
   }]);
 
+//COURSES FACTORY
+app.factory('courses', ['$http',
+	function($http){
+		
+		var crs = {courses: []}
+		
+		//Create a New Course
+		crs.create = function(course) {
+			return $http.post('/courses', course).success(function(data){
+				crs.courses.push(data);
+			});
+		};
+		
+		//Get All Courses
+		crs.getAll = function() {
+			return $http.get('/courses').success(function(data){
+				angular.copy(data, o.posts);
+			});
+		};
+		
+		return crs;
+	
+	}
+])
+  
 app.factory('posts',['$http',
     function($http){
 
@@ -82,32 +121,13 @@ app.factory('posts',['$http',
       return o;
 	  
 }]);
+
 app.controller('MainCtrl', [
       '$scope',
       'posts',
       function($scope,posts){
-        $scope.test = 'Hello world!';
+      
         $scope.posts = posts.posts;
-        $scope.addPost = function(){
-          if(!$scope.title || $scope.title === '') { return; }
-          $scope.posts.push({
-            title: $scope.title,
-            link: $scope.link,
-            upvotes: 0,
-            comments: [
-              {author: 'Joe', body: 'Cool post!', upvotes: 0},
-              {author: 'Bob', body: 'Great idea but everything is wrong!', upvotes: 0}
-            ]
-          });
-          $scope.title='';
-          $scope.link='';
-        };
-		
-		/*
-        $scope.decrementUpvotes = function(post) {
-          post.upvotes -= 1;
-        };
-		*/
 		
 		//Upvote Post
 		$scope.incrementUpvotes = function(post) {
@@ -131,6 +151,52 @@ app.controller('MainCtrl', [
 		};
 				
 }]);
+
+app.controller('MainCtrl', [
+    '$scope',
+    'courses',
+    function($scope,courses){
+
+
+		//Add A New Course
+		$scope.addCourse = function(){
+			
+		//Check to See All Required Fields Are Populated
+		if(!$scope.course_name || $scope.course_name === '') { return; }
+		if(!$scope.depart || $scope.depart === '') { return; }
+		if(!$scope.course_code || $scope.course_code === '') { return; }
+		if(!$scope.prof || $scope.prof === '') { return; }
+			
+		//If There Is No Link to Image, Populate With Default
+		if($scope.img_link === ''){
+			$scope.img_link = "http://www.senseitout.com/wp-content/uploads/2016/01/3q.jpg";
+		}
+			
+		//Log Input
+		console.log("It Worked");
+		console.log($scope.course_name);
+		console.log($scope.depart);
+		console.log($scope.course_code);
+		console.log($scope.prof);
+			
+		//Create the New Course
+		courses.create({
+			
+			// CODE GOES HERE
+			
+		});	
+			
+		//Clear Fields
+		$scope.course_name = "";
+		$scope.depart = "";
+		$scope.course_code = "";
+		$scope.prof = "";
+			
+		}
+	}
+]);
+
+
 app.controller('PostsCtrl', [
         '$scope',
         'posts',
@@ -142,14 +208,6 @@ app.controller('PostsCtrl', [
 		  //Add Comment
           $scope.addComment = function() {
             if($scope.body ===''){return; }
-			
-			/*
-            $scope.post.comments.push({
-              body: $scope.body,
-              author: 'user',
-              upvotes: 0
-            });
-			*/
 			
 			
 			posts.addComment(post._id, {
