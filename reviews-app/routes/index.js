@@ -19,7 +19,6 @@ router.get('/courses', function(req, res, next) {
     if(err){
       return next(err);
     }
-	console.log("in get courses");
     res.json(courses);
   });
 });
@@ -30,35 +29,22 @@ router.post('/courses', function(req, res, next) {
   course.save(function(err, course){
     if(err){ return next(err); }
     res.json(course);
-	console.log("here!!");
   });
 });
+
+//Find a Course By ID
+router.param('course', function(req, res, next, id) {
+  var query = Course.findById(id);
+  query.exec(function (err, course){
+    if (err) { return next(err); }
+    if (!course) { return next(new Error("can't find course")); }
+    req.course = course;
+    return next();
+  });
+});
+
 
 /*
-var Post = mongoose.model('Post');
-var Comment = mongoose.model('Comment');
-
-//Get Posts From Database
-router.get('/posts', function(req, res, next) {
-  Post.find(function(err, posts){
-    if(err){
-      return next(err);
-    }
-
-    res.json(posts);
-  });
-});
-
-//Create a New Post
-router.post('/posts', function(req, res, next) {
-  var post = new Post(req.body);
-
-  post.save(function(err, post){
-    if(err){ return next(err); }
-
-    res.json(post);
-  });
-});
 
 //Find a Post By ID
 router.param('post', function(req, res, next, id) {

@@ -48,7 +48,6 @@ function($http){
     });
   };
 
-  
   //Get All Courses
   crs.getAll = function() {
     return $http.get('/courses').success(function(data){
@@ -56,6 +55,13 @@ function($http){
     });
   };
 
+  //Get An Individual Course By ID
+   crs.get = function(id) {
+	 return $http.get('/courses/' + id).then(function(res){
+		return res.data;
+	 });
+   };
+  
   return crs;
 
 }
