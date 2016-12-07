@@ -25,11 +25,11 @@ app.config([
   url: '/courses/{id}',
   templateUrl: '/courses.html',
   controller: 'CoursesCtrl',
-  // resolve: {
-  //   post: ['$stateParams', 'posts', function($stateParams, posts) {
-  //     return posts.get($stateParams.id);
-  //   }]
-  // }
+   resolve: {
+     post: ['$stateParams', 'courses', function($stateParams, courses) {
+       return courses.get($stateParams.id);
+     }]
+   }
 });
 
 $urlRouterProvider.otherwise('home');
@@ -57,6 +57,7 @@ function($http){
 
   //Get An Individual Course By ID
    crs.get = function(id) {
+	 console.log("you're in here");
 	 return $http.get('/courses/' + id).then(function(res){
 		return res.data;
 	 });
@@ -206,11 +207,12 @@ app.controller('MainCtrl', [
 app.controller('CoursesCtrl', [
   '$scope',
   'courses',
-  'post',
-  function($scope,posts,post){
+  'course',
+  function($scope,courses,course){
 
-    $scope.post = post;
-
+    $scope.course = course;
+	console.log(course);
+	/*
     //Add Comment
     $scope.addComment = function() {
       if($scope.body ===''){return; }
@@ -226,6 +228,7 @@ app.controller('CoursesCtrl', [
 
       $scope.body='';
     };
-
+	*/
+	
   }
 ]);

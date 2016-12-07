@@ -35,6 +35,8 @@ router.post('/courses', function(req, res, next) {
 //Find a Course By ID
 router.param('course', function(req, res, next, id) {
   var query = Course.findById(id);
+  console.log(id);
+  console.log(query);
   query.exec(function (err, course){
     if (err) { return next(err); }
     if (!course) { return next(new Error("can't find course")); }
@@ -43,6 +45,47 @@ router.param('course', function(req, res, next, id) {
   });
 });
 
+
+//Populate a Post with Comments
+router.get('/courses/:course', function(req, res, next) {
+	console.log("THE FUCK");
+  req.course.populate('courses', function(err, course) {
+    res.json(course);
+  });
+});
+
+
+//Get Review By ID
+router.param('review', function(req, res, next, id) {
+  var query = Review.findById(id);
+
+  query.exec(function (err, review){
+    if (err) { return next(err); }
+    if (!review) { return next(new Error("can't find review")); }
+
+    req.review = review;
+    return next();
+  });
+});
+
+/*
+router.post('/courses/:course/reviews', function(req, res, next) {
+  
+  var review = new Review(req.body);
+  review.course = req.course;
+
+  review.save(function(err, review){
+    if(err){ return next(err); }
+
+    req.course.reviews.push(review);
+    req.couse.save(function(err, couse) {
+      if(err){ return next(err); }
+
+      res.json(review);
+    });
+  });
+});
+*/
 
 /*
 
@@ -59,23 +102,7 @@ router.param('post', function(req, res, next, id) {
   });
 });
 
-//Upvote a Post
-router.put('/posts/:post/upvote', function(req, res, next) {
-  req.post.upvote(function(err, post){
-    if (err) { return next(err); }
 
-    res.json(post);
-  });
-});
-
-//Downvote a Post
-router.put('/posts/:post/downvote', function(req, res, next) {
-  req.post.downvote(function(err, post){
-    if (err) { return next(err); }
-
-    res.json(post);
-  });
-});
 
 //ADDED
 
