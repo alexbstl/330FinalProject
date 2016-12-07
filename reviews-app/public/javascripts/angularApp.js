@@ -7,8 +7,6 @@ app.config([
 
     $stateProvider
 
-
-
     .state('home', {
       url: '/home',
       templateUrl: '/home.html',
@@ -57,7 +55,6 @@ app.config([
 
     //Get An Individual Course By ID
     crs.get = function(id) {
-      console.log("you're in here");
       return $http.get('/courses/' + id).then(function(res){
         console.log(res);
         return res.data;
@@ -68,7 +65,6 @@ app.config([
     crs.addReview = function(id, review) {
       return $http.post('/courses/' + id + '/reviews', review);
     };
-
 
     return crs;
 
@@ -135,19 +131,19 @@ app.controller('CoursesCtrl', [
   'course',
   function($scope,courses,course){
 
+    //Set Default Values
     $scope.course = course;
     $scope.values=[1,2,3,4,5];
     $scope.overall_score=5;
     $scope.diff_score=5;
     $scope.teach_score=5;
 
-
     //Add Review
     $scope.addReview = function() {
       if($scope.body ===''){return; }
 
       console.log("You're In");
-      courses.addReview(course._id, {
+      courses.addReview(course._id, {//create new review
 
         body: $scope.body,
         overall_score : $scope.overall_score,
@@ -160,7 +156,7 @@ app.controller('CoursesCtrl', [
         $scope.course.reviews.push(review);
       });
 
-      $scope.body='';
+      $scope.body='';//clear the text field upon submission
     };
 
 
