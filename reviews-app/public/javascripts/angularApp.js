@@ -57,6 +57,19 @@ app.config([
     crs.get = function(id) {
       return $http.get('/courses/' + id).then(function(res){
         console.log(res);
+        var len=res.data.reviews.length;
+        var overall_score=0;
+        var diff_score=0;
+        var teach_score=0;
+        for (var i = 1;i<len;i++){
+          overall_score+=res.data.reviews[i].overall_score;
+          diff_score+=res.data.reviews[i].diff_score;
+          teach_score+=res.data.reviews[i].teach_score;
+        }
+        res.data.overall_score = Math.round( 100*overall_score/len)/100;
+        res.data.teach_score = Math.round(100* teach_score/len)/100;
+        res.data.diff_score = Math.round(100*diff_score/len)/100;
+        console.log(res.data);
         return res.data;
       });
     };

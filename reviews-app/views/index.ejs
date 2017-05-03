@@ -15,8 +15,8 @@
   <div class="row">
     <div class="col-md-6 col-md-offset-3">
       <nav class = navbar navbar-light bg-faded>
-          <a class="navbar-brand" href="#/home">Home <span class="sr-only">(current)</span></a>
-          <a class="navbar-brand" href="/logout">Logout</a>
+        <a class="navbar-brand" href="#/home">Home <span class="sr-only">(current)</span></a>
+        <a class="navbar-brand" href="/logout">Logout</a>
       </nav>
       <ui-view></ui-view>
     </div>
@@ -44,8 +44,8 @@
           <th>Course Name</th>
           <th>Course Code</th>
           <th>Department</th>
-		  <th># Reviews</th>
-		  <th>Student Reviews</th>
+          <th># Reviews</th>
+          <th>Student Reviews</th>
         </tr>
       </thead>
       <tbody>
@@ -55,7 +55,7 @@
           <td>{{course.name}}</td>
           <td>{{course.code}}</td>
           <td>{{course.dept}}</td>
-		  <td>{{course.reviews.length}}</td>
+          <td>{{course.reviews.length}}</td>
           <td><a href="#/courses/{{course._id}}">Reviews</a></td>
         </tr>
       </tbody>
@@ -104,46 +104,61 @@
     <h2>
 
     </h2>
-    <h3>
-	  {{course.name}} ( {{course.dept}} {{course.code}} ) <br>
-      {{course.prof}} <br>
-	  <img src={{course.img_link}} alt = "Image Here" height = "200" width = "200"> <br>
-	  Existing Reviews:
-    </h3>
-	<div ng-repeat="review in course.reviews">
-	  <hr>
-      {{review.body}} <br>
-      Overall: {{review.overall_score}}<br>
-      Difficulty: {{review.diff_score}}<br>
-      Teaching: {{review.teach_score}}<br>
-	  <hr>
-    </div>
-	<h3>We Want Your Feedback</h3>
-    <form ng-submit="addReview()">
-      <div class="form-group">
-        <input type="text"
-        class="form-control"
-        placeholder="Comments on the Class"
-        ng-model="body"></input>
-      </div>
-      <div class = "form-group">
+    <div id="overall" class = "container">
+
+      <h3>
+        {{course.name}} ( {{course.dept}} {{course.code}} ) <br>
+        {{course.prof}} <br>
+        <img src={{course.img_link}} alt = "Image Here" height = "200" width = "200"> <br>
         <label for="Overall">Overall Score:</label>
-        <select ng-model="overall_score" ng-options="selectedItem for selectedItem in values"></select>
+        {{course.overall_score}}
         <br>
         <label for="Difficulty">Course Difficulty:</label>
-        <select ng-model="diff_score" ng-options="selectedItem for selectedItem in values"></select>
+        {{course.diff_score}}
         <br>
         <label for="Teaching">Teaching Ability:</label>
-        <select ng-model="teach_score" ng-options="selectedItem for selectedItem in values"></select>
+        {{course.teach_score}}
+        <br>
+      </h3>
+    </div>
+    <div class="container">
+      <h3>
+        Existing Reviews:
+      </h3>
+      <div ng-repeat="review in course.reviews">
+        <hr>
+        {{review.body}} <br>
+        Overall: {{review.overall_score}}<br>
+        Difficulty: {{review.diff_score}}<br>
+        Teaching: {{review.teach_score}}<br>
+        <hr>
       </div>
-	  <button type="submit" class="btn btn-primary">Add Review</button>
-    </form>
-	<hr>
-	<h3>
-	<a href="#/home">Return to Main Page</a>
-	</h3>
+      <h3>We Want Your Feedback</h3>
+      <form ng-submit="addReview()">
+        <div class="form-group">
+          <input type="text"
+          class="form-control"
+          placeholder="Comments on the Class"
+          ng-model="body"></input>
+        </div>
+        <div class = "form-group">
+          <label for="Overall">Overall Score:</label>
+          <select ng-model="overall_score" ng-options="selectedItem for selectedItem in values"></select>
+          <br>
+          <label for="Difficulty">Course Difficulty:</label>
+          <select ng-model="diff_score" ng-options="selectedItem for selectedItem in values"></select>
+          <br>
+          <label for="Teaching">Teaching Ability:</label>
+          <select ng-model="teach_score" ng-options="selectedItem for selectedItem in values"></select>
+        </div>
+        <button type="submit" class="btn btn-primary">Add Review</button>
+      </form>
+      <hr>
+      <h3>
+        <a href="#/home">Return to Main Page</a>
+      </h3>
 
-
+    </div>
   </div>
 
 </script>

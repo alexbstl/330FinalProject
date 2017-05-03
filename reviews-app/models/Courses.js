@@ -12,6 +12,8 @@ var CourseSchema = new mongoose.Schema({
   reviews: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Review' }]
 });
 CourseSchema.methods.totalScore = function(cb){
+  console.log(cb);
+  console.log("HERE");
   overall_score = 0;
   diff_score = 0;
   teach_score=0;
