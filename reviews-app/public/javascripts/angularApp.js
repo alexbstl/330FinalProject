@@ -61,7 +61,7 @@ app.config([
         var overall_score=0;
         var diff_score=0;
         var teach_score=0;
-        for (var i = 1;i<len;i++){
+        for (var i = 0;i<len;i++){
           overall_score+=res.data.reviews[i].overall_score;
           diff_score+=res.data.reviews[i].diff_score;
           teach_score+=res.data.reviews[i].teach_score;
@@ -167,6 +167,18 @@ app.controller('CoursesCtrl', [
       }).success(function(review) {
         console.log(review);
         $scope.course.reviews.push(review);
+        var len=$scope.course.reviews.length;
+        var overall_score=0;
+        var diff_score=0;
+        var teach_score=0;
+        for (var i = 0;i<len;i++){
+          overall_score+=$scope.course.reviews[i].overall_score;
+          diff_score+=$scope.course.reviews[i].diff_score;
+          teach_score+=$scope.course.reviews[i].teach_score;
+        }
+        $scope.course.overall_score = Math.round( 100*overall_score/len)/100;
+        $scope.course.teach_score = Math.round(100* teach_score/len)/100;
+        $scope.course.diff_score = Math.round(100*diff_score/len)/100;
       });
 
       $scope.body='';//clear the text field upon submission
